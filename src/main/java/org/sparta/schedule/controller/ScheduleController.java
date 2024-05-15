@@ -2,6 +2,7 @@ package org.sparta.schedule.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.sparta.schedule.dto.ScheduleAddDto;
+import org.sparta.schedule.dto.ScheduleDeleteDto;
 import org.sparta.schedule.dto.ScheduleResDto;
 import org.sparta.schedule.dto.ScheduleUpdateDto;
 import org.sparta.schedule.service.ScheduleService;
@@ -35,8 +36,8 @@ public class ScheduleController {
         return scheduleService.updateSchedule(id, updateDto);
     }
 
-    @DeleteMapping
-    public String deleteSchedule(String scheduleId){
-        return null;
+    @DeleteMapping("/{id}")
+    public long deleteSchedule(@PathVariable long id, @RequestBody ScheduleDeleteDto deleteDto){
+        return scheduleService.deleteSchedule(id, deleteDto);
     }
 }

@@ -2,6 +2,7 @@ package org.sparta.schedule.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sparta.schedule.dto.ScheduleAddDto;
+import org.sparta.schedule.dto.ScheduleDeleteDto;
 import org.sparta.schedule.dto.ScheduleResDto;
 import org.sparta.schedule.dto.ScheduleUpdateDto;
 import org.sparta.schedule.entity.Schedule;
@@ -41,11 +42,22 @@ public class ScheduleService {
     @Transactional
     public ScheduleResDto updateSchedule(Long id, ScheduleUpdateDto updateDto) {
         Schedule schedule = findById(id);
-        if (!Objects.equals(schedule.getPassword(), updateDto.getPassword())) {
-            throw new InvalidCredentialsException("비밀번호가 일치하지 않습니다.");
-        }
+        checkPassword(schedule.getPassword(), updateDto.getPassword());
         schedule.updateSchedule(updateDto);
         return new ScheduleResDto(schedule);
+    }
+
+    public long deleteSchedule(long id, ScheduleDeleteDto deleteDto) {
+        Schedule schedule = findById(id);
+        checkPassword(schedule.getPassword(), deleteDto.getPassword());
+        scheduleRepository.delete(schedule);
+        return id;
+    }
+
+    private void checkPassword(String password, String targetPassword) {
+        if (!Objects.equals(password, targetPassword)) {
+            throw new InvalidCredentialsException("비밀번호가 일치하지 않습니다.");
+        }
     }
 
     private Schedule findById(long id) {
