@@ -17,5 +17,4 @@ public class ScheduleAddDto {
     private String content;
     private String name;
     private String password;
-    private LocalDateTime createAt;
 }
