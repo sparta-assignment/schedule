@@ -17,7 +17,7 @@ public class ScheduleController {
 
     @GetMapping
     public List<ScheduleResDto> getSchedules() {
-        return null;
+        return scheduleService.getSchedules();
     }
 
     @GetMapping("/{id}")

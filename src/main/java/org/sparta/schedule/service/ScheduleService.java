@@ -8,6 +8,8 @@ import org.sparta.schedule.repository.ScheduleRepository;
 import org.sparta.schedule.utils.mapper.MapperUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ScheduleService {
@@ -28,5 +30,11 @@ public class ScheduleService {
 
     private Schedule findById(long id) {
         return scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당하는 일정이 없습니다."));
+    }
+
+    public List<ScheduleResDto> getSchedules() {
+        return scheduleRepository.findAllByOrderByCreateAtDesc()
+                .stream().map(ScheduleResDto::new)
+                .toList();
     }
 }
