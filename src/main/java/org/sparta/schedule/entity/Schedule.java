@@ -1,12 +1,26 @@
 package org.sparta.schedule.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "schedule")
-public class Schedule {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@EntityListeners(AuditingEntityListener.class)
+public class Schedule extends TimeStamped{
     @Id
+    @GeneratedValue
     private Long id;
+    private String title;
+    private String content;
+    private String name;
+    private String password;
 }
