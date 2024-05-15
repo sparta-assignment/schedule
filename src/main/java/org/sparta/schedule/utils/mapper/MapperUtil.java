@@ -50,17 +50,12 @@ public class MapperUtil {
     }
 
     /**
-     * 해당 클래스의 모든 필드와 상속된 필드까지 모두 확인한다.
+     * 해당 클래스의 모든 필드를 확인한다.
      * @param targetClass 모든 필드를 확인할 클래스
-     * @return 해당 클래스의 상속된 필드 및 모든 필드 List
+     * @return 해당 클래스의 모든 필드 List
      */
     private static List<Field> getAllFields(Class<?> targetClass) {
-        List<Field> fields = new ArrayList<>();
-        while (targetClass != null) {
-            fields.addAll(Arrays.asList(targetClass.getDeclaredFields()));
-            targetClass = targetClass.getSuperclass();
-        }
-        return fields;
+        return new ArrayList<>(Arrays.asList(targetClass.getDeclaredFields()));
     }
 
     /**
