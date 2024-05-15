@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.sparta.schedule.dto.ScheduleUpdateDto;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -23,4 +24,10 @@ public class Schedule extends TimeStamped{
     private String content;
     private String name;
     private String password;
+
+    public void updateSchedule(ScheduleUpdateDto updateDto) {
+        this.title = updateDto.getTitle();
+        this.content = updateDto.getContent();
+        this.name = updateDto.getName();
+    }
 }

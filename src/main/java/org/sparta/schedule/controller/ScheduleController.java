@@ -30,9 +30,9 @@ public class ScheduleController {
         return scheduleService.createSchedule(addDto);
     }
 
-    @PutMapping
-    public ScheduleResDto updateSchedule(ScheduleUpdateDto updateDto){
-        return null;
+    @PutMapping("/{id}")
+    public ScheduleResDto updateSchedule(@PathVariable long id, @RequestBody ScheduleUpdateDto updateDto){
+        return scheduleService.updateSchedule(id, updateDto);
     }
 
     @DeleteMapping
