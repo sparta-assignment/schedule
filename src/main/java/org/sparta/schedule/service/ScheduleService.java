@@ -19,4 +19,14 @@ public class ScheduleService {
                 scheduleRepository.save(schedule)
         );
     }
+
+    public ScheduleResDto getSchedule(long id) {
+        return new ScheduleResDto(
+                findById(id)
+        );
+    }
+
+    private Schedule findById(long id) {
+        return scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당하는 일정이 없습니다."));
+    }
 }

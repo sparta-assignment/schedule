@@ -14,9 +14,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ScheduleController {
     private final ScheduleService scheduleService;
+
     @GetMapping
     public List<ScheduleResDto> getSchedules() {
         return null;
+    }
+
+    @GetMapping("/{id}")
+    public ScheduleResDto getSchedule(@PathVariable long id) {
+        return scheduleService.getSchedule(id);
     }
 
     @PostMapping
