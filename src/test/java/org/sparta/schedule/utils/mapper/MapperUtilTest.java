@@ -1,0 +1,31 @@
+package org.sparta.schedule.utils.mapper;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.sparta.schedule.dto.ScheduleAddDto;
+import org.sparta.schedule.entity.Schedule;
+
+
+class MapperUtilTest {
+
+    @Test
+    @DisplayName("Mapper Util이 제대로 작동하는지 확인")
+    public void test1() {
+        // taken
+        ScheduleAddDto addDto = ScheduleAddDto.builder()
+                .title("일정 제목")
+                .name("작성자")
+                .content("일정 내용")
+                .password("asdf")
+                .build();
+
+        // when
+        Schedule schedule1 = MapperUtil.toEntity(addDto, Schedule.class);
+        Schedule schedule2 = MapperUtil.toEntity(addDto, Schedule.class, 1L);
+        Schedule schedule3 = new Schedule(1L, "asd", "asdf", "asdf", "asdf", null);
+
+        System.out.println(schedule1);
+        System.out.println(schedule2);
+        System.out.println(schedule3);
+    }
+}
