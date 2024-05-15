@@ -6,6 +6,7 @@ import org.sparta.schedule.dto.ScheduleDeleteDto;
 import org.sparta.schedule.dto.ScheduleResDto;
 import org.sparta.schedule.dto.ScheduleUpdateDto;
 import org.sparta.schedule.entity.Schedule;
+import org.sparta.schedule.exception.DataNotFoundException;
 import org.sparta.schedule.exception.InvalidCredentialsException;
 import org.sparta.schedule.repository.ScheduleRepository;
 import org.sparta.schedule.utils.mapper.MapperUtil;
@@ -61,6 +62,6 @@ public class ScheduleService {
     }
 
     private Schedule findById(long id) {
-        return scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당하는 일정이 없습니다."));
+        return scheduleRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당하는 일정이 없습니다."));
     }
 }
