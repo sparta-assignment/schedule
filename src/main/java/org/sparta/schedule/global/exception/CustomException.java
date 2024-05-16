@@ -1,4 +1,4 @@
-package org.sparta.schedule.exception;
+package org.sparta.schedule.global.exception;
 
 public class CustomException extends RuntimeException {
     private int status = 500;

@@ -1,4 +1,4 @@
-package org.sparta.schedule.exception;
+package org.sparta.schedule.global.exception;
 
 public class InvalidCredentialsException extends CustomException {
     public InvalidCredentialsException(String msg) {

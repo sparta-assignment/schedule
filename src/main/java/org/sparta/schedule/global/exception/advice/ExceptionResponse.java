@@ -1,4 +1,4 @@
-package org.sparta.schedule.exception.advice;
+package org.sparta.schedule.global.exception.advice;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
