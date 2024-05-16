@@ -1,6 +1,7 @@
 package org.sparta.schedule.global.file.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sparta.schedule.global.file.dto.FileDownloadRes;
 import org.sparta.schedule.global.file.dto.FileUploadRes;
@@ -22,7 +23,7 @@ public class FileController {
     private final FileService fileService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<FileUploadRes> uploadFile(@ModelAttribute FileUploadReq req){
+    public List<FileUploadRes> uploadFile(@ModelAttribute @Valid FileUploadReq req){
         return fileService.uploadFile(req);
     }
 

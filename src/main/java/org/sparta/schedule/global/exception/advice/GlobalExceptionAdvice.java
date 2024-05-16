@@ -1,6 +1,7 @@
 package org.sparta.schedule.global.exception.advice;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import org.sparta.schedule.global.exception.CustomException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,29 +42,30 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ExceptionResponse> processValidationError(HttpServletRequest request, MethodArgumentNotValidException exception) {
-        int VALIDATION_ERROR_STATUS = 400;
+        int VALIDATION_ERROR_STATUS = HttpStatus.BAD_REQUEST.value();
         BindingResult bindingResult = exception.getBindingResult();
         StringBuilder builder = new StringBuilder();
 
-        for (FieldError fieldError : bindingResult.getFieldErrors()) {
-            String fieldName = fieldError.getField();
-
-            builder.append("[");
-            builder.append(fieldName);
-            builder.append("](은)는 ");
-            builder.append(fieldError.getDefaultMessage());
-            builder.append(" 입력된 값: [");
+        FieldError fieldError = bindingResult.getFieldErrors().get(0);
+        builder.append("[");
+        builder.append(fieldError.getField());
+        builder.append("](은)는 ");
+        builder.append(fieldError.getDefaultMessage() == ""? "데이터 검증에 실패하였습니다." : fieldError.getDefaultMessage());
+        if (checkPrimitiveType(fieldError.getRejectedValue())) {
+            builder.append("   입력된 값: [");
             builder.append(fieldError.getRejectedValue());
             builder.append("]");
         }
 
-        String msg = builder.toString();
-
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
-                .msg(msg)
+                .msg(builder.toString())
                 .path(request.getRequestURI())
                 .build();
 
         return new ResponseEntity<>(exceptionResponse, null, VALIDATION_ERROR_STATUS);
+    }
+
+    private boolean checkPrimitiveType(Object value) {
+        return value instanceof String || value instanceof Integer || value instanceof Float || value instanceof Double;
     }
 }

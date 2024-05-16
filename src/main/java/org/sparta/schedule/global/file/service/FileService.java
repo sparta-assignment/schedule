@@ -40,7 +40,7 @@ public class FileService {
 
         for (MultipartFile file : req.getFiles()) {
             // 디스크에 파일 저장
-            String extension =  "." + getFileExtension(file.getOriginalFilename());
+            String extension =  "." + FileUtil.getFileExtension(file.getOriginalFilename());
             String fullPath = getFullSaveFilePath(getSaveFileName()) + extension;
             if (!FileUtil.save(file, fullPath)) {
                 // 저장에 실패하면 아무런 값을 넣지 않음
@@ -126,17 +126,5 @@ public class FileService {
 
     private String getSaveFileName(){
         return UUID.randomUUID().toString().substring(1,8) + System.currentTimeMillis();
-    }
-
-    /**
-     * 해당하는 파일의 확장자를 가져온다.
-     * @param fileName 파일 이름
-     * @return 확장자 문자열
-     */
-    public static String getFileExtension(String fileName){
-        String extension = StringUtils.getFilenameExtension(fileName);
-        if (extension == null)
-            return "";
-        return extension;
     }
 }

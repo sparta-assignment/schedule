@@ -2,6 +2,7 @@ package org.sparta.schedule.utils;
 
 import org.sparta.schedule.global.exception.CustomException;
 import org.springframework.core.io.UrlResource;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -39,5 +40,15 @@ public class FileUtil {
         }catch (MalformedURLException e) {
             throw new CustomException(200, "오류가 발생하여 파일을 다운로드에 실패했습니다.");
         }
+    }
+
+    /**
+     * 해당하는 파일의 확장자를 가져온다.
+     * @param fileName 파일 이름
+     * @return 확장자 문자열
+     */
+    public static String getFileExtension(String fileName){
+        String extension = StringUtils.getFilenameExtension(fileName);
+        return extension;
     }
 }
