@@ -23,10 +23,10 @@ class MapperUtilTest {
         // when
         Schedule schedule1 = MapperUtil.toEntity(addDto, Schedule.class);
         Schedule schedule2 = MapperUtil.toEntity(addDto, Schedule.class, 1L);
-        Schedule schedule3 = new Schedule(1L, "asd", "asdf", "asdf", "asdf");
+//        Schedule schedule3 = new Schedule(1L, "asd", "asdf", "asdf", "asdf");
 
         System.out.println(schedule1);
         System.out.println(schedule2);
-        System.out.println(schedule3);
+//        System.out.println(schedule3);
     }
 }

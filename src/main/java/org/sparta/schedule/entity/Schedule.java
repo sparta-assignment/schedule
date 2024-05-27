@@ -1,29 +1,32 @@
 package org.sparta.schedule.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.sparta.schedule.dto.ScheduleUpdateDto;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "schedule")
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@EntityListeners(AuditingEntityListener.class)
 public class Schedule extends TimeStamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "schedule_id")
     private Long id;
     private String title;
     private String content;
     private String name;
     private String password;
+
+    @OneToMany(mappedBy = "schedule")
+    private List<Comment> comments = new ArrayList<>();
 
     public void updateSchedule(ScheduleUpdateDto updateDto) {
         this.title = updateDto.getTitle();
