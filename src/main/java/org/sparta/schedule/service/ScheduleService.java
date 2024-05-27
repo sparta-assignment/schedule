@@ -6,10 +6,10 @@ import org.sparta.schedule.dto.ScheduleDeleteDto;
 import org.sparta.schedule.dto.ScheduleResDto;
 import org.sparta.schedule.dto.ScheduleUpdateDto;
 import org.sparta.schedule.entity.Schedule;
-import org.sparta.schedule.global.exception.DataNotFoundException;
-import org.sparta.schedule.global.exception.InvalidCredentialsException;
+import org.sparta.schedule.common.exception.DataNotFoundException;
+import org.sparta.schedule.common.exception.InvalidCredentialsException;
 import org.sparta.schedule.repository.ScheduleRepository;
-import org.sparta.schedule.utils.mapper.MapperUtil;
+import org.sparta.schedule.common.utils.mapper.MapperUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
