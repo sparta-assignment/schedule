@@ -61,7 +61,7 @@ public class ScheduleService {
         }
     }
 
-    private Schedule findById(long id) {
+    public Schedule findById(long id) {
         return scheduleRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당하는 일정이 없습니다."));
     }
 }

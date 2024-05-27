@@ -10,14 +10,19 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected ExceptionResponse defaultException(HttpServletRequest request, Exception e){
+        String msg = e.getMessage();
+        if(e instanceof NoResourceFoundException) {
+            msg = "해당하는 리소스가 없습니다.";
+        }
         return ExceptionResponse.builder()
-                .msg(e.getMessage())
+                .msg(msg)
                 .path(request.getRequestURI())
                 .build();
     }
