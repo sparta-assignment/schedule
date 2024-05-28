@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.sparta.schedule.common.exception.DataNotFoundException;
 import org.sparta.schedule.common.exception.InvalidCredentialsException;
 import org.sparta.schedule.common.utils.mapper.MapperUtil;
+import org.sparta.schedule.dto.CommentDeleteDto;
 import org.sparta.schedule.dto.CommentReqDto;
 import org.sparta.schedule.dto.CommentResDto;
 import org.sparta.schedule.dto.CommentUpdateDto;
@@ -48,5 +49,11 @@ public class CommentService {
         return commentRepository.findById(commentId).orElseThrow(
                 () -> new DataNotFoundException("해당하는 댓글 데이터를 찾을 수 없습니다.")
         );
+    }
+
+    public void deleteComment(Long commentId, CommentDeleteDto reqDto) {
+        Comment comment = findById(commentId);
+        checkWriter(reqDto.getWriter(), comment.getWriter());
+        commentRepository.delete(comment);
     }
 }
