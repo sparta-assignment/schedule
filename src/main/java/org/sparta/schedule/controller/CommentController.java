@@ -1,5 +1,6 @@
 package org.sparta.schedule.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,18 +19,21 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
     private final CommentService commentService;
 
+    @Operation(summary = "댓글 추가", description = "댓글을 추가한다.")
     @PostMapping("{scheduleId}")
     public CommentResDto addComment(@PathVariable("scheduleId") Long scheduleId,
                                     @RequestBody @Valid CommentReqDto reqDto) {
         return commentService.addComment(scheduleId, reqDto);
     }
 
+    @Operation(summary = "댓글 수정", description = "댓글을 수정한다.")
     @PutMapping("{commentId}")
     public CommentResDto updateComment(@PathVariable("commentId") Long commentId,
                               @RequestBody @Valid CommentUpdateDto reqDto) {
         return commentService.updateComment(commentId, reqDto);
     }
 
+    @Operation(summary = "댓글 삭제", description = "댓글을 삭제한다.")
     @DeleteMapping("{commentId}")
     public ResponseEntity<String> deleteComment(@PathVariable("commentId") Long commentId,
                                         @RequestBody @Valid CommentDeleteDto reqDto) {
