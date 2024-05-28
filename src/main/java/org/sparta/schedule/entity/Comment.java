@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.sparta.schedule.dto.CommentUpdateDto;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -26,5 +27,9 @@ public class Comment extends TimeStamped{
 
     public void addSchedule(Schedule schedule) {
         this.schedule = schedule;
+    }
+
+    public void updateComment(CommentUpdateDto updateDto) {
+        this.content = updateDto.getContent();
     }
 }

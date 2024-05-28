@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sparta.schedule.dto.CommentReqDto;
 import org.sparta.schedule.dto.CommentResDto;
+import org.sparta.schedule.dto.CommentUpdateDto;
 import org.sparta.schedule.service.CommentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,5 +20,11 @@ public class CommentController {
     public CommentResDto addComment(@PathVariable("scheduleId") Long scheduleId,
                                     @RequestBody @Valid CommentReqDto reqDto) {
         return commentService.addComment(scheduleId, reqDto);
+    }
+
+    @PutMapping("{commentId}")
+    public CommentResDto updateComment(@PathVariable("commentId") Long commentId,
+                              @RequestBody @Valid CommentUpdateDto reqDto) {
+        return commentService.updateComment(commentId, reqDto);
     }
 }
