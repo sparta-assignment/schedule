@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class LoginResDto {
     private UserResDto user;
-    private String access_token;
+    private String accessToken;
 }

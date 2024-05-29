@@ -4,11 +4,15 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.sparta.schedule.common.jwt.JwtTokenProvider;
 import org.sparta.schedule.dto.LoginReqDto;
 import org.sparta.schedule.dto.LoginResDto;
 import org.sparta.schedule.dto.UserAddDto;
 import org.sparta.schedule.dto.UserResDto;
 import org.sparta.schedule.service.AuthService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +34,13 @@ public class AuthController {
 
     @Operation(summary = "로그인", description = "로그인")
     @PostMapping("/signIn")
-    public LoginResDto signIn(@RequestBody LoginReqDto loginReqDto) {
-        return authService.signIn(loginReqDto);
+    public ResponseEntity<UserResDto> signIn(@RequestBody LoginReqDto loginReqDto) {
+        LoginResDto loginResDto = authService.signIn(loginReqDto);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(JwtTokenProvider.AUTHORIZATION_HEADER, loginResDto.getAccessToken());
+        return new ResponseEntity<>(
+                loginResDto.getUser(),
+                headers,
+                HttpStatus.OK.value());
     }
 }
