@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.sparta.schedule.dto.LoginReqDto;
+import org.sparta.schedule.dto.LoginResDto;
 import org.sparta.schedule.dto.UserAddDto;
 import org.sparta.schedule.dto.UserResDto;
 import org.sparta.schedule.service.AuthService;
@@ -23,5 +25,12 @@ public class AuthController {
     @PostMapping
     public UserResDto signUp(@RequestBody @Valid UserAddDto userAddDto) {
         return authService.signUp(userAddDto);
+    }
+
+
+    @Operation(summary = "로그인", description = "로그인")
+    @PostMapping("/signIn")
+    public LoginResDto signIn(@RequestBody LoginReqDto loginReqDto) {
+        return authService.signIn(loginReqDto);
     }
 }

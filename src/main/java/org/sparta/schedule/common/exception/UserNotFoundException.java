@@ -2,8 +2,8 @@ package org.sparta.schedule.common.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class DataNotFoundException extends CustomException{
-    public DataNotFoundException(String msg) {
+public class UserNotFoundException extends CustomException {
+    public UserNotFoundException(String msg) {
         super(HttpStatus.OK.value(), msg);
     }
 }
