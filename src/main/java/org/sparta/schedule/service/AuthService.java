@@ -3,8 +3,8 @@ package org.sparta.schedule.service;
 import lombok.RequiredArgsConstructor;
 import org.sparta.schedule.common.exception.DuplicateIdException;
 import org.sparta.schedule.common.utils.mapper.MapperUtil;
-import org.sparta.schedule.dto.LoginReqDto;
-import org.sparta.schedule.dto.LoginResDto;
+import org.sparta.schedule.dto.UserAddDto;
+import org.sparta.schedule.dto.UserResDto;
 import org.sparta.schedule.entity.User;
 import org.sparta.schedule.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final UserRepository userRepository;
 
-    public LoginResDto signUp(LoginReqDto loginReqDto) {
+    public UserResDto signUp(UserAddDto userAddDto) {
         // 중복 ID 확인
-        existsByUsername(loginReqDto.getUsername());
-        User user = MapperUtil.toEntity(loginReqDto, User.class);
-        return new LoginResDto(userRepository.save(user));
+        existsByUsername(userAddDto.getUsername());
+        User user = MapperUtil.toEntity(userAddDto, User.class);
+        return new UserResDto(userRepository.save(user));
     }
 
     public void existsByUsername(String username) {
