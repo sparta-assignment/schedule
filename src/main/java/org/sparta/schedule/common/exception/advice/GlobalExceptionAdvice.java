@@ -17,7 +17,7 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected ExceptionResponse defaultException(HttpServletRequest request, Exception e){
-        String msg = e.getMessage();
+        String msg = "실패하였습니다.";
         if(e instanceof NoResourceFoundException) {
             msg = "해당하는 리소스가 없습니다.";
         }
