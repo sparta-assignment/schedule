@@ -24,7 +24,7 @@ public class AuthenticationEntryPoint implements org.springframework.security.we
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.info("401 Unauthorized, {}", request.getRequestURI());
-        CommonResult result = responseService.getFailResult(HttpStatus.UNAUTHORIZED.value(), "인증에 실패하였습니다.");
+        CommonResult result = responseService.getFailResult(HttpStatus.UNAUTHORIZED.value(), "잘못된 토큰이거나 만료된 토큰입니다.");
         responseService.setErrorResponse(response, result);
     }
 }

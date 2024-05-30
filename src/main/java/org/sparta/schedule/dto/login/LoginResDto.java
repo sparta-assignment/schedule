@@ -1,9 +1,10 @@
-package org.sparta.schedule.dto;
+package org.sparta.schedule.dto.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.sparta.schedule.dto.UserResDto;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,5 +12,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class LoginResDto {
     private UserResDto user;
-    private String accessToken;
+    private String refreshToken;
 }

@@ -1,19 +1,16 @@
 package org.sparta.schedule.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sparta.schedule.common.exception.DataNotFoundException;
 import org.sparta.schedule.common.exception.DuplicateIdException;
 import org.sparta.schedule.common.exception.InvalidCredentialsException;
 import org.sparta.schedule.common.exception.UserNotFoundException;
-import org.sparta.schedule.common.jwt.JwtTokenProvider;
 import org.sparta.schedule.common.utils.mapper.MapperUtil;
-import org.sparta.schedule.dto.LoginReqDto;
-import org.sparta.schedule.dto.LoginResDto;
-import org.sparta.schedule.dto.UserAddDto;
-import org.sparta.schedule.dto.UserResDto;
+import org.sparta.schedule.dto.*;
+import org.sparta.schedule.dto.login.LoginDto;
+import org.sparta.schedule.dto.login.LoginReqDto;
+import org.sparta.schedule.dto.login.LoginResDto;
 import org.sparta.schedule.entity.User;
 import org.sparta.schedule.repository.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -22,7 +19,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final TokenService tokenService;
 
     public UserResDto signUp(UserAddDto userAddDto) {
         // 중복 ID 확인
@@ -31,12 +28,13 @@ public class AuthService {
         return new UserResDto(userRepository.save(user));
     }
 
-    public LoginResDto signIn(LoginReqDto loginReqDto) {
+    public LoginDto signIn(LoginReqDto loginReqDto) {
         User user = findByUsername(loginReqDto.getUsername());
         checkPassword(loginReqDto.getPassword(), user.getPassword());
 
-        String token = jwtTokenProvider.createToken(user.getUsername(), user.getRole());
-        return new LoginResDto(new UserResDto(user), token);
+        String accessToken = tokenService.createAccessToken(user.getUsername(), user.getRole());
+        String refreshToken = tokenService.createRefreshToken(user);
+        return new LoginDto(new UserResDto(user), new TokenDto(accessToken, refreshToken));
     }
 
     private void existsByUsername(String username) {
@@ -55,5 +53,11 @@ public class AuthService {
         if (!Objects.equals(inputPassword, password)) {
             throw new InvalidCredentialsException("비밀번호가 맞지 않습니다.");
         }
+    }
+
+    public TokenDto reissueToken(String accessToken, String refreshToken) {
+        String username = tokenService.getTokenUsername(accessToken);
+        User user = findByUsername(username);
+        return tokenService.reissueToken(user, refreshToken);
     }
 }

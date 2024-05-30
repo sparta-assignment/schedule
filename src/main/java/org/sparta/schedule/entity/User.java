@@ -2,6 +2,7 @@ package org.sparta.schedule.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,7 +21,9 @@ public class User extends TimeStamped{
     @Enumerated(EnumType.STRING)
     private UserRoleEnum role;
 
+    @Builder
     public User(Long id, String username, String password, String nickname, UserRoleEnum role) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.nickname = nickname;
