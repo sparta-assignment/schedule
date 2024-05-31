@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.sparta.schedule.dto.ScheduleUpdateDto;
+import org.sparta.schedule.dto.ScheduleAddDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +22,15 @@ public class Schedule extends TimeStamped{
     private Long id;
     private String title;
     private String content;
-    private String name;
-    private String password;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "schedule")
     private List<Comment> comments = new ArrayList<>();
 
-    public void updateSchedule(ScheduleUpdateDto updateDto) {
+    public void updateSchedule(ScheduleAddDto updateDto) {
         this.title = updateDto.getTitle();
         this.content = updateDto.getContent();
-        this.name = updateDto.getName();
     }
 }

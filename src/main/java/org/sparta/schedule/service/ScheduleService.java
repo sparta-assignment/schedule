@@ -2,12 +2,12 @@ package org.sparta.schedule.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sparta.schedule.dto.ScheduleAddDto;
-import org.sparta.schedule.dto.ScheduleDeleteDto;
 import org.sparta.schedule.dto.ScheduleResDto;
-import org.sparta.schedule.dto.ScheduleUpdateDto;
+import org.sparta.schedule.dto.ScheduleVo;
 import org.sparta.schedule.entity.Schedule;
 import org.sparta.schedule.common.exception.DataNotFoundException;
 import org.sparta.schedule.common.exception.InvalidCredentialsException;
+import org.sparta.schedule.entity.User;
 import org.sparta.schedule.repository.ScheduleRepository;
 import org.sparta.schedule.common.utils.mapper.MapperUtil;
 import org.springframework.stereotype.Service;
@@ -21,16 +21,23 @@ import java.util.Objects;
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
-    public ScheduleResDto createSchedule(ScheduleAddDto addDto) {
-        Schedule schedule = MapperUtil.toEntity(addDto, Schedule.class);
+    public ScheduleResDto createSchedule(Long userId, ScheduleAddDto addDto) {
+        ScheduleVo scheduleVo = new ScheduleVo(
+                null,
+                addDto.getTitle(),
+                addDto.getContent(),
+                getUser(userId),
+                null
+        );
+        Schedule schedule = MapperUtil.toEntity(scheduleVo, Schedule.class);
         return new ScheduleResDto(
                 scheduleRepository.save(schedule)
         );
     }
 
-    public ScheduleResDto getSchedule(long id) {
+    public ScheduleResDto getSchedule(Long scheduleId) {
         return new ScheduleResDto(
-                findById(id)
+                findById(scheduleId)
         );
     }
 
@@ -41,27 +48,33 @@ public class ScheduleService {
     }
 
     @Transactional
-    public ScheduleResDto updateSchedule(Long id, ScheduleUpdateDto updateDto) {
-        Schedule schedule = findById(id);
-        checkPassword(schedule.getPassword(), updateDto.getPassword());
+    public ScheduleResDto updateSchedule(Long scheduleId, Long userId, ScheduleAddDto updateDto) {
+        Schedule schedule = findById(scheduleId);
+        checkUserId(userId, schedule.getUser().getId());
         schedule.updateSchedule(updateDto);
         return new ScheduleResDto(schedule);
     }
 
-    public long deleteSchedule(long id, ScheduleDeleteDto deleteDto) {
-        Schedule schedule = findById(id);
-        checkPassword(schedule.getPassword(), deleteDto.getPassword());
+    public long deleteSchedule(Long scheduleId, Long userId) {
+        Schedule schedule = findById(scheduleId);
+        checkUserId(userId, schedule.getUser().getId());
         scheduleRepository.delete(schedule);
-        return id;
+        return scheduleId;
     }
 
-    private void checkPassword(String password, String targetPassword) {
-        if (!Objects.equals(password, targetPassword)) {
-            throw new InvalidCredentialsException("비밀번호가 일치하지 않습니다.");
+    private void checkUserId(Long inputUserId, Long userId) {
+        if (!Objects.equals(inputUserId, userId)) {
+            throw new InvalidCredentialsException("작성자가 일치하지 않습니다.");
         }
     }
 
-    public Schedule findById(long id) {
-        return scheduleRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당하는 일정이 없습니다."));
+    private User getUser(Long userId) {
+        return User.builder()
+                .id(userId)
+                .build();
+    }
+
+    public Schedule findById(Long scheduleId) {
+        return scheduleRepository.findById(scheduleId).orElseThrow(() -> new DataNotFoundException("해당하는 일정이 없습니다."));
     }
 }

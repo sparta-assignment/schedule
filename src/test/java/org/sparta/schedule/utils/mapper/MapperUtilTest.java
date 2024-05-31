@@ -12,12 +12,10 @@ class MapperUtilTest {
     @Test
     @DisplayName("Mapper Util이 제대로 작동하는지 확인")
     public void test1() {
-        // taken
+        // given
         ScheduleAddDto addDto = ScheduleAddDto.builder()
                 .title("일정 제목")
-                .name("작성자")
                 .content("일정 내용")
-                .password("asdf")
                 .build();
 
         // when

@@ -1,4 +1,4 @@
-package org.sparta.schedule.dto;
+package org.sparta.schedule.dto.comment;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class CommentUpdateDto {
+public class CommentReqDto {
     @NotEmpty
     private String content;
-    @NotEmpty
-    private String writer;
 }
