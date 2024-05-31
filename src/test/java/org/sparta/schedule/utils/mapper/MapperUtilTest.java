@@ -3,7 +3,7 @@ package org.sparta.schedule.utils.mapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.sparta.schedule.common.utils.mapper.MapperUtil;
-import org.sparta.schedule.dto.ScheduleAddDto;
+import org.sparta.schedule.dto.schedule.ScheduleAddDto;
 import org.sparta.schedule.entity.Schedule;
 
 

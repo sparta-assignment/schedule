@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.sparta.schedule.dto.ScheduleAddDto;
+import org.sparta.schedule.dto.schedule.ScheduleAddDto;
 
 import java.util.ArrayList;
 import java.util.List;

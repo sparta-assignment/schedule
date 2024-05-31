@@ -1,9 +1,7 @@
-package org.sparta.schedule.dto;
+package org.sparta.schedule.dto.schedule;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package org.sparta.schedule.dto;
+package org.sparta.schedule.dto.schedule;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -20,14 +20,11 @@ public class ScheduleResDto {
     private String content;
     @Schema(description = "작성일")
     private LocalDateTime createAt;
-    @Schema(description = "댓글")
-    private List<CommentResDto> comments;
 
     public ScheduleResDto(Schedule schedule) {
         this.id = schedule.getId();
         this.title = schedule.getTitle();
         this.content = schedule.getContent();
         this.createAt = schedule.getCreateAt();
-        this.comments = schedule.getComments().stream().map(CommentResDto::new).toList();
     }
 }

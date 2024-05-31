@@ -5,11 +5,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sparta.schedule.common.security.UserDetailsImpl;
-import org.sparta.schedule.dto.ScheduleAddDto;
-import org.sparta.schedule.dto.ScheduleResDto;
+import org.sparta.schedule.dto.schedule.ScheduleAddDto;
+import org.sparta.schedule.dto.schedule.ScheduleReadResDto;
+import org.sparta.schedule.dto.schedule.ScheduleResDto;
 import org.sparta.schedule.service.ScheduleService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.EntityResponse;
 
 import java.util.List;
 
@@ -22,13 +25,13 @@ public class ScheduleController {
 
     @Operation(summary = "모든 일정 출력", description = "모든 일정을 가져온다.")
     @GetMapping
-    public List<ScheduleResDto> getSchedules() {
+    public List<ScheduleReadResDto> getSchedules() {
         return scheduleService.getSchedules();
     }
 
     @Operation(summary = "선택한 일정 출력", description = "선택한 일정을 가져온다.")
     @GetMapping("/{scheduleId}")
-    public ScheduleResDto getSchedule(@PathVariable Long scheduleId) {
+    public ScheduleReadResDto getSchedule(@PathVariable Long scheduleId) {
         return scheduleService.getSchedule(scheduleId);
     }
 
@@ -49,8 +52,9 @@ public class ScheduleController {
 
     @Operation(summary = "선택한 일정 삭제", description = "선택한 일정을 삭제한다")
     @DeleteMapping("/{scheduleId}")
-    public long deleteSchedule(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                               @PathVariable Long scheduleId){
-        return scheduleService.deleteSchedule(scheduleId, userDetails.getUser().getId());
+    public ResponseEntity<String> deleteSchedule(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                                 @PathVariable Long scheduleId){
+        scheduleService.deleteSchedule(scheduleId, userDetails.getUser().getId());
+        return ResponseEntity.ok("해당 일정 삭제를 완료하였습니다.");
     }
 }

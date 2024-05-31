@@ -1,7 +1,6 @@
 package org.sparta.schedule.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sparta.schedule.dto.TokenDto;
 import org.sparta.schedule.entity.RefreshToken;
 import org.sparta.schedule.entity.User;
 import org.sparta.schedule.repository.RefreshTokenRepository;

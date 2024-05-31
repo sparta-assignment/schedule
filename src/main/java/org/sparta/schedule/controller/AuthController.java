@@ -5,10 +5,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sparta.schedule.common.jwt.JwtTokenProvider;
-import org.sparta.schedule.dto.*;
 import org.sparta.schedule.dto.login.LoginDto;
 import org.sparta.schedule.dto.login.LoginReqDto;
 import org.sparta.schedule.dto.login.LoginResDto;
+import org.sparta.schedule.dto.token.TokenDto;
+import org.sparta.schedule.dto.user.UserAddDto;
+import org.sparta.schedule.dto.user.UserResDto;
 import org.sparta.schedule.service.AuthService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -45,7 +47,7 @@ public class AuthController {
     @Operation(summary = "토큰 재발급", description = "리프레시 토큰으로 토큰을 재발급 합니다.")
     @PostMapping("token")
     public ResponseEntity<TokenDto.RefreshToken> reissueToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String accessToken,
-                                                 @RequestBody TokenDto.RefreshToken tokenDto) {
+                                                              @RequestBody TokenDto.RefreshToken tokenDto) {
         accessToken = JwtTokenProvider.getTokenFromRequest(accessToken);
         TokenDto token = authService.reissueToken(accessToken, tokenDto.getRefreshToken());
         return new ResponseEntity<>(

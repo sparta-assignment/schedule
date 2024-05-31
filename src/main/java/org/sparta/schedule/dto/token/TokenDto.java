@@ -1,7 +1,6 @@
-package org.sparta.schedule.dto;
+package org.sparta.schedule.dto.token;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -1,9 +1,10 @@
 package org.sparta.schedule.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sparta.schedule.dto.ScheduleAddDto;
-import org.sparta.schedule.dto.ScheduleResDto;
-import org.sparta.schedule.dto.ScheduleVo;
+import org.sparta.schedule.dto.schedule.ScheduleAddDto;
+import org.sparta.schedule.dto.schedule.ScheduleReadResDto;
+import org.sparta.schedule.dto.schedule.ScheduleResDto;
+import org.sparta.schedule.dto.schedule.ScheduleVo;
 import org.sparta.schedule.entity.Schedule;
 import org.sparta.schedule.common.exception.DataNotFoundException;
 import org.sparta.schedule.common.exception.InvalidCredentialsException;
@@ -35,15 +36,15 @@ public class ScheduleService {
         );
     }
 
-    public ScheduleResDto getSchedule(Long scheduleId) {
-        return new ScheduleResDto(
+    public ScheduleReadResDto getSchedule(Long scheduleId) {
+        return new ScheduleReadResDto(
                 findById(scheduleId)
         );
     }
 
-    public List<ScheduleResDto> getSchedules() {
+    public List<ScheduleReadResDto> getSchedules() {
         return scheduleRepository.findAllByOrderByCreateAtDesc()
-                .stream().map(ScheduleResDto::new)
+                .stream().map(ScheduleReadResDto::new)
                 .toList();
     }
 
