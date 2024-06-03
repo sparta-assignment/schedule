@@ -20,8 +20,6 @@ import java.util.Objects;
 public class CommentService {
     private final ScheduleService scheduleService;
     private final CommentRepository commentRepository;
-    private final UserRepository userRepository;
-
 
     public CommentResDto addComment(Long userId, Long scheduleId, CommentReqDto reqDto) {
         Schedule schedule = scheduleService.findById(scheduleId);
@@ -37,15 +35,15 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentResDto updateComment(Long userId, Long commentId, CommentReqDto reqDto) {
-        Comment comment = findById(commentId);
+    public CommentResDto updateComment(Long userId, Long scheduleId, Long commentId, CommentReqDto reqDto) {
+        Comment comment = findByIdAndSchedule_Id(commentId, scheduleId);
         checkWriter(userId, comment.getUser().getId());
         comment.updateComment(reqDto);
         return new CommentResDto(comment);
     }
 
-    public void deleteComment(Long userId, Long commentId) {
-        Comment comment = findById(commentId);
+    public void deleteComment(Long userId, Long scheduleId, Long commentId) {
+        Comment comment = findByIdAndSchedule_Id(commentId, scheduleId);
         checkWriter(userId, comment.getUser().getId());
         commentRepository.delete(comment);
     }
@@ -62,9 +60,9 @@ public class CommentService {
                 .build();
     }
 
-    public Comment findById(Long commentId) {
-        return commentRepository.findById(commentId).orElseThrow(
-                () -> new DataNotFoundException("해당하는 댓글 데이터를 찾을 수 없습니다.")
+    private Comment findByIdAndSchedule_Id(Long commentId, Long scheduleId) {
+        return commentRepository.findByIdAndSchedule_Id(commentId, scheduleId).orElseThrow(
+                () -> new DataNotFoundException("해당하는 일정 데이터를 찾을 수 없거나 댓글 데이터를 찾을 수 없습니다.")
         );
     }
 }

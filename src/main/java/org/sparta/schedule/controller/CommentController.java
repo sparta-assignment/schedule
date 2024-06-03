@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Tag(name = "Comment API", description = "댓글 관련 API 입니다.")
-@RequestMapping("/api/comments")
+@RequestMapping("/api/schedules/{scheduleId}/comments")
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
 
     @Operation(summary = "댓글 추가", description = "댓글을 추가한다.")
-    @PostMapping("{scheduleId}")
+    @PostMapping
     public CommentResDto addComment(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                     @PathVariable("scheduleId") Long scheduleId,
                                     @RequestBody @Valid CommentReqDto reqDto) {
@@ -28,18 +28,20 @@ public class CommentController {
     }
 
     @Operation(summary = "댓글 수정", description = "댓글을 수정한다.")
-    @PutMapping("{commentId}")
+    @PutMapping("/{commentId}")
     public CommentResDto updateComment(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                       @PathVariable("scheduleId") Long scheduleId,
                                        @PathVariable("commentId") Long commentId,
                                        @RequestBody @Valid CommentReqDto reqDto) {
-        return commentService.updateComment(userDetails.getUser().getId(), commentId, reqDto);
+        return commentService.updateComment(userDetails.getUser().getId(), commentId, commentId, reqDto);
     }
 
     @Operation(summary = "댓글 삭제", description = "댓글을 삭제한다.")
-    @DeleteMapping("{commentId}")
+    @DeleteMapping("/{commentId}")
     public ResponseEntity<String> deleteComment(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                                @PathVariable("scheduleId") Long scheduleId,
                                                 @PathVariable("commentId") Long commentId) {
-        commentService.deleteComment(userDetails.getUser().getId(), commentId);
+        commentService.deleteComment(userDetails.getUser().getId(), scheduleId, commentId);
         return ResponseEntity.ok("성공했습니다.");
     }
 }
