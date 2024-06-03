@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.sparta.schedule.common.response.CommonResult;
 import org.sparta.schedule.common.response.ResponseService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +23,7 @@ public class AuthenticationEntryPoint implements org.springframework.security.we
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.info("401 Unauthorized, {}", request.getRequestURI());
-        CommonResult result = responseService.getFailResult(HttpStatus.UNAUTHORIZED.value(), "잘못된 토큰이거나 만료된 토큰입니다.");
+        CommonResult result = responseService.setFailureResult(HttpStatus.UNAUTHORIZED.value(), "잘못된 토큰이거나 만료된 토큰입니다.");
         responseService.setErrorResponse(response, result);
     }
 }
