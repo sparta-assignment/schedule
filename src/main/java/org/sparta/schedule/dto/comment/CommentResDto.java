@@ -1,23 +1,24 @@
 package org.sparta.schedule.dto.comment;
 
 import lombok.Getter;
+import org.sparta.schedule.common.dto.CommonDto;
 import org.sparta.schedule.entity.Comment;
 
 import java.time.LocalDateTime;
 
 @Getter
-public class CommentResDto {
-    private Long comment_id;
+public class CommentResDto implements CommonDto {
+    private Long commentId;
     private String content;
     private String username;
-    private Long schedule_id;
-    private LocalDateTime create_date;
+    private Long scheduleId;
+    private LocalDateTime createAt;
 
     public CommentResDto(Comment comment) {
-        this.comment_id = comment.getId();
+        this.commentId = comment.getId();
         this.content = comment.getContent();
         this.username = comment.getUser().getUsername();
-        this.schedule_id = comment.getSchedule().getId();
-        this.create_date = comment.getCreateAt();
+        this.scheduleId = comment.getSchedule().getId();
+        this.createAt = comment.getCreateAt();
     }
 }

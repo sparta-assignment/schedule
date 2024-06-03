@@ -4,11 +4,12 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.sparta.schedule.common.dto.CommonDto;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class LoginReqDto {
+public class LoginReqDto implements CommonDto {
     @NotEmpty
     private String username;
     @NotEmpty

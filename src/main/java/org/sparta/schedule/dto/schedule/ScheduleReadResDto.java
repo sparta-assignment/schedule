@@ -3,6 +3,7 @@ package org.sparta.schedule.dto.schedule;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.sparta.schedule.common.dto.CommonDto;
 import org.sparta.schedule.dto.comment.CommentResDto;
 import org.sparta.schedule.entity.Schedule;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class ScheduleReadResDto {
+public class ScheduleReadResDto implements CommonDto {
     @Schema(description = "일정 id")
     private Long id;
     @Schema(description = "제목")
