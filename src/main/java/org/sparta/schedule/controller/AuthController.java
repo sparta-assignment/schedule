@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sparta.schedule.common.jwt.JwtTokenProvider;
+import org.sparta.schedule.common.response.ResponseService;
+import org.sparta.schedule.common.response.SingleResult;
 import org.sparta.schedule.dto.login.LoginDto;
 import org.sparta.schedule.dto.login.LoginReqDto;
 import org.sparta.schedule.dto.login.LoginResDto;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
+    private final ResponseService responseService;
 
     @Operation(summary = "회원가입", description = "회원가입")
     @PostMapping
@@ -32,28 +35,27 @@ public class AuthController {
 
     @Operation(summary = "로그인", description = "로그인")
     @PostMapping("/signin")
-    public ResponseEntity<LoginResDto> signIn(@RequestBody LoginReqDto loginReqDto) {
+    public ResponseEntity<SingleResult<LoginResDto>> signIn(@RequestBody LoginReqDto loginReqDto) {
         LoginDto loginDto = authService.signIn(loginReqDto);
 
-        return new ResponseEntity<>(
+        return responseService.getSingleResult(
                 LoginResDto.builder()
-                        .user(loginDto.getUser())
-                        .refreshToken(loginDto.getToken().getRefreshToken())
-                        .build(),
-                getAuthorizationHeader(loginDto.getToken().getAccessToken()),
-                HttpStatus.OK.value());
+                .user(loginDto.getUser())
+                .refreshToken(loginDto.getToken().getRefreshToken())
+                .build(),
+                getAuthorizationHeader(loginDto.getToken().getAccessToken())
+        );
     }
 
     @Operation(summary = "토큰 재발급", description = "리프레시 토큰으로 토큰을 재발급 합니다.")
     @PostMapping("token")
-    public ResponseEntity<TokenDto.RefreshToken> reissueToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String accessToken,
+    public ResponseEntity<SingleResult<TokenDto.RefreshToken>> reissueToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String accessToken,
                                                               @RequestBody TokenDto.RefreshToken tokenDto) {
         accessToken = JwtTokenProvider.getTokenFromRequest(accessToken);
         TokenDto token = authService.reissueToken(accessToken, tokenDto.getRefreshToken());
-        return new ResponseEntity<>(
+        return responseService.getSingleResult(
                 new TokenDto.RefreshToken(token.getRefreshToken()),
-                getAuthorizationHeader(token.getAccessToken()),
-                HttpStatus.OK.value()
+                getAuthorizationHeader(token.getAccessToken())
         );
     }
 
