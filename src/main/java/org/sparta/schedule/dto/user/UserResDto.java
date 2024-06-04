@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
-public class UserResDto implements CommonDto {
+public class UserResDto {
     private Long id;
     private String username;
     private String nickname;

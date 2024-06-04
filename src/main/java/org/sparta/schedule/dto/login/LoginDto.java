@@ -12,7 +12,7 @@ import org.sparta.schedule.dto.user.UserResDto;
 @NoArgsConstructor
 @Builder
 @Getter
-public class LoginDto implements CommonDto {
+public class LoginDto {
     private UserResDto user;
     private TokenDto token;
 }

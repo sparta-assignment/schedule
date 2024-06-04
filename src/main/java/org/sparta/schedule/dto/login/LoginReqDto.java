@@ -9,7 +9,7 @@ import org.sparta.schedule.common.dto.CommonDto;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class LoginReqDto implements CommonDto {
+public class LoginReqDto {
     @NotEmpty
     private String username;
     @NotEmpty

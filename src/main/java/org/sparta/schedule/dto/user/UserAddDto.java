@@ -10,7 +10,7 @@ import org.sparta.schedule.common.dto.CommonDto;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class UserAddDto implements CommonDto {
+public class UserAddDto {
     @NotEmpty
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{4,10}$", message = "아이디는 최소 4자 이상, 10자 이하이며 알파벳 소문자(a~z), 숫자(0~9)로 구성되어야 합니다.")
     private String username;

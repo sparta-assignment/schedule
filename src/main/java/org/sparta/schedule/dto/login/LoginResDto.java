@@ -11,7 +11,7 @@ import org.sparta.schedule.dto.user.UserResDto;
 @NoArgsConstructor
 @Builder
 @Getter
-public class LoginResDto implements CommonDto {
+public class LoginResDto {
     private UserResDto user;
     private String refreshToken;
 }

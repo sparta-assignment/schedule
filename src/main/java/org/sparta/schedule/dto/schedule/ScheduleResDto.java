@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class ScheduleResDto implements CommonDto {
+public class ScheduleResDto {
     @Schema(description = "일정 id")
     private Long id;
     @Schema(description = "제목")

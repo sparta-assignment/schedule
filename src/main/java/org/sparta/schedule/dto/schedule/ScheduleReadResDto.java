@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class ScheduleReadResDto implements CommonDto {
+public class ScheduleReadResDto {
     @Schema(description = "일정 id")
     private Long id;
     @Schema(description = "제목")

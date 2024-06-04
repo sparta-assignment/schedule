@@ -9,7 +9,7 @@ import org.sparta.schedule.common.dto.CommonDto;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class CommentReqDto implements CommonDto {
+public class CommentReqDto {
     @NotEmpty
     private String content;
 }

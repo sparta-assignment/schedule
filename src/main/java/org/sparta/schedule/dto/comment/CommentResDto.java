@@ -7,7 +7,7 @@ import org.sparta.schedule.entity.Comment;
 import java.time.LocalDateTime;
 
 @Getter
-public class CommentResDto implements CommonDto {
+public class CommentResDto {
     private Long commentId;
     private String content;
     private String username;

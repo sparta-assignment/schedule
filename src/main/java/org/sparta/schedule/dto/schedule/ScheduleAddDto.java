@@ -10,7 +10,7 @@ import org.sparta.schedule.common.dto.CommonDto;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ScheduleAddDto implements CommonDto {
+public class ScheduleAddDto {
     @Schema(description = "제목")
     @NotNull
     @Size(max = 200)

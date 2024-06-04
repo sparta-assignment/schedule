@@ -8,7 +8,7 @@ import org.sparta.schedule.common.dto.CommonDto;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class TokenDto implements CommonDto {
+public class TokenDto {
     private String accessToken;
     private String refreshToken;
 
